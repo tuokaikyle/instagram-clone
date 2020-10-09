@@ -4,6 +4,7 @@ const PORT = 5000;
 // 使用这个schema
 require("./models/user");
 require("./models/post");
+const cors = require("cors");
 
 // mongoose setup
 const mongoose = require("mongoose");
@@ -18,6 +19,7 @@ mongoose.connection.on("error", (err) => {
   console.log("the error is", err);
 });
 
+app.use(cors());
 // parse the incomming request
 app.use(express.json());
 // 使用这个routes

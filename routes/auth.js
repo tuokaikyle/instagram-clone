@@ -17,6 +17,7 @@ router.get("/", (req, res) => {
 
 // 测试方法 postman模拟前端发送请求
 // header: {Content-Type: application/json}
+// 注意使用两种 error, good. 关系到提示颜色
 router.post("/signup", (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
