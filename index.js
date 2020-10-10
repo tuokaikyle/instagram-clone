@@ -12,11 +12,14 @@ const { MONGOURI } = require("./keys");
 mongoose.connect(MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // 提示信息
+let today = new Date();
+let time =
+  today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 mongoose.connection.on("connected", () => {
-  console.log("mongoose connected");
+  console.log("MongoDb Connected at .................", time);
 });
 mongoose.connection.on("error", (err) => {
-  console.log("the error is", err);
+  console.log(time, err);
 });
 
 app.use(cors());

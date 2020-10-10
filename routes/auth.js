@@ -60,11 +60,14 @@ router.post("/login", (req, res) => {
       }
       bcrypt.compare(password, found.password).then((correct) => {
         if (correct) {
-          // res.json({ good: "登录成功" });
+          // res.json({  });
           const token = jwt.sign({ _id: found._id }, JWT_SECRET);
-          res.json({ token });
+          // 在found中获得这三项
+          const { _id, name, email } = found;
+          // user的内容是一个obj，里面包含三项
+          res.json({ token, user: { _id, name, email }, good: "登录成功" });
         } else {
-          res.json({ bad: "登录信息有误" });
+          res.json({ error: "登录信息有误" });
         }
       });
     })

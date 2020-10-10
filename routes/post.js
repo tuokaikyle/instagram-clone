@@ -18,17 +18,18 @@ router.get("/allposts", requireLogin, (req, res) => {
 });
 
 router.post("/createpost", requireLogin, (req, res) => {
-  const { title, body } = req.body;
-  if (!title || !body) {
+  const { title, body, pic } = req.body;
+  console.log(title);
+  if (!title || !body || !pic) {
     return res.status(422).json({ error: "提交信息不全" });
   }
   // 这句话是为了不让加密的密码显示出来
   req.user.password = undefined;
-  const post = new Post({ title, body, postedBy: req.user });
+  const post = new Post({ title, body, photo: pic, postedBy: req.user });
   post
     .save()
     .then((result) => {
-      res.json({ posted: result });
+      res.json({ posted: result, good: "已提交至数据库" });
     })
     .catch((err) => {
       console.log(err);
