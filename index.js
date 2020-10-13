@@ -9,7 +9,11 @@ const cors = require("cors");
 // mongoose setup
 const mongoose = require("mongoose");
 const { MONGOURI } = require("./keys");
-mongoose.connect(MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGOURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 
 // 提示信息
 let today = new Date();

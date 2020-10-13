@@ -8,6 +8,7 @@ const Post = mongoose.model("Post");
 router.get("/allposts", requireLogin, (req, res) => {
   Post.find()
     // 此时populate的意思是 填入内容 不然只显示一个id
+    .populate("comments.postedBy", "_id name")
     .populate("postedBy", "_id name")
     .then((allPosts) => {
       res.json({ allPosts });
@@ -19,7 +20,7 @@ router.get("/allposts", requireLogin, (req, res) => {
 
 router.post("/createpost", requireLogin, (req, res) => {
   const { title, body, pic } = req.body;
-  console.log(title);
+  // console.log(title);
   if (!title || !body || !pic) {
     return res.status(422).json({ error: "提交信息不全" });
   }
@@ -40,7 +41,9 @@ router.get("/myposts", requireLogin, (req, res) => {
   Post.find({ postedBy: req.user._id })
     .populate("postedBy", "_id name")
     .then((mine) => {
-      console.log(req.user.name);
+      // console.log(req.user.name);
+      // res.json({ mine });
+      // 以下是列表形式
       res.json(mine);
     })
     .catch((err) => {
@@ -48,10 +51,83 @@ router.get("/myposts", requireLogin, (req, res) => {
     });
 });
 
+router.put("/like", requireLogin, (req, res) => {
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      // 给req.body.likes中加入一条这个东西
+      $push: { likes: req.user._id },
+    },
+    { new: true }
+  )
+    .populate("postedBy", "_id name")
+    .exec((error, result) => {
+      if (error) {
+        return res.status(422).json({ error: error });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.put("/unlike", requireLogin, (req, res) => {
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    { $pull: { likes: req.user._id } },
+    // set new to let mongodb to return the newly updated record
+    { new: true }
+  )
+    .populate("postedBy", "_id name")
+    .exec((error, result) => {
+      if (error) {
+        return res.status(422).json({ error });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.put("/comment", requireLogin, (req, res) => {
+  const comment = {
+    text: req.body.text,
+    postedBy: req.user._id,
+  };
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    { $push: { comments: comment } },
+    { new: true }
+  )
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
+    .exec((error, result) => {
+      if (error) {
+        return res.status(422).json({ error });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.delete("/deletepost/:postId", requireLogin, (req, res) => {
+  Post.findOne({ _id: req.params.postId })
+    .populate("postedBy", "_id")
+    .exec((error, post) => {
+      if (error || !post) {
+        return res.status(422).json({ error });
+      }
+      if (post.postedBy._id.toString() === req.user._id.toString()) {
+        post
+          .remove()
+          .then((result) => {
+            res.json(result);
+            // 下面这句话是错误的
+            // result.json();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+});
+
 module.exports = router;
-
-// 4
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjdlYWVlNzNhMjk1ZTIwZDQ0NzgwZDciLCJpYXQiOjE2MDIyMDYxNjF9.2wtjoiAEPoCrSLhjGRWviJ8h8byiUYh66lEAxClDLHU
-
-// 5
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjdmMDRiOTJmMzQ2NDFlNzQyODYzNjkiLCJpYXQiOjE2MDIxNjQ1MDN9.kFRnlc5N62JruMJ_BoGHkzpQwmCYEAet29S2F98dA7w
