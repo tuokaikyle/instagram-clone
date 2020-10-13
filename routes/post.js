@@ -109,6 +109,7 @@ router.put("/comment", requireLogin, (req, res) => {
 });
 
 router.delete("/deletepost/:postId", requireLogin, (req, res) => {
+  // 此时params就是url的冒号后面的东西
   Post.findOne({ _id: req.params.postId })
     .populate("postedBy", "_id")
     .exec((error, post) => {

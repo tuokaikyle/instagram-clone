@@ -32,6 +32,7 @@ app.use(express.json());
 // 使用这个routes
 app.use(require("./routes/auth"));
 app.use(require("./routes/post"));
+app.use(require("./routes/user"));
 
 // 设定端口PORT
 app.listen(PORT, () => {
