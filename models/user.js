@@ -16,10 +16,11 @@ const userSchema = new mongoose.Schema({
   },
   // resetToken:String,
   // expireToken:Date,
-  // pic:{
-  //  type:String,
-  //  default:"https://res.cloudinary.com/cnq/image/upload/v1586197723/noimage_d4ipmd.png"
-  // },
+  pic: {
+    type: String,
+    default:
+      "https://images.unsplash.com/photo-1490116718651-ded9239b5af3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+  },
   followers: [{ type: ObjectId, ref: "User" }],
   following: [{ type: ObjectId, ref: "User" }],
 });

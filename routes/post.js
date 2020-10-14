@@ -19,6 +19,19 @@ router.get("/allposts", requireLogin, (req, res) => {
     });
 });
 
+router.get("/postsfromfollowings", requireLogin, (req, res) => {
+  // 在所有帖子中，如果帖子的作者 in 当前用户的following里面
+  Post.find({ postedBy: { $in: req.user.following } })
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
+    .then((posts) => {
+      res.json({ posts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post("/createpost", requireLogin, (req, res) => {
   const { title, body, pic } = req.body;
   // console.log(title);
@@ -38,19 +51,18 @@ router.post("/createpost", requireLogin, (req, res) => {
     });
 });
 
-// 这里需要返回两个东西 me, 指的是当前用户，用于dispatch, 更新state, 获取follow信息
-// mine指的是当前用户的帖子，用户设置data， 展示帖子数量和展示名下帖子
+// 这里需要返回两个东西 me，mine. Me指的是人，用于dispatch, 更新state, 获取follow信息
+// mine指的是帖子，用户设置data， 展示帖子数量和展示名下帖子
+// 以上两行是我自己的做法 现在按照视频修改
 router.get("/myposts", requireLogin, (req, res) => {
-  User.findOne({ _id: req.user._id }).then((me) => {
-    Post.find({ postedBy: req.user._id })
-      .populate("postedBy", "_id name")
-      .then((mine) => {
-        res.json({ mine, following: me.following, followers: me.followers });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  Post.find({ postedBy: req.user._id })
+    .populate("postedBy", "_id name")
+    .then((mine) => {
+      res.json({ mine });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.put("/like", requireLogin, (req, res) => {
