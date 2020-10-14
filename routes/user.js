@@ -61,7 +61,7 @@ router.put("/follow", requireLogin, (req, res) => {
 });
 router.put("/unfollow", requireLogin, (req, res) => {
   User.findByIdAndUpdate(
-    req.body.wantToFollow,
+    req.body.wantToUnFollow,
     {
       $pull: { followers: req.user._id },
     },
@@ -72,7 +72,7 @@ router.put("/unfollow", requireLogin, (req, res) => {
       } else {
         User.findByIdAndUpdate(
           req.user._id,
-          { $pull: { following: req.body.wantToFollow } },
+          { $pull: { following: req.body.wantToUnFollow } },
           { new: true }
         )
           .select("-password")

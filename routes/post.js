@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 // 注意这种导入方式
 const Post = mongoose.model("Post");
+const User = mongoose.model("User");
 
 router.get("/allposts", requireLogin, (req, res) => {
   Post.find()
@@ -37,18 +38,19 @@ router.post("/createpost", requireLogin, (req, res) => {
     });
 });
 
+// 这里需要返回两个东西 me, 指的是当前用户，用于dispatch, 更新state, 获取follow信息
+// mine指的是当前用户的帖子，用户设置data， 展示帖子数量和展示名下帖子
 router.get("/myposts", requireLogin, (req, res) => {
-  Post.find({ postedBy: req.user._id })
-    .populate("postedBy", "_id name")
-    .then((mine) => {
-      // console.log(req.user.name);
-      // res.json({ mine });
-      // 以下是列表形式
-      res.json(mine);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  User.findOne({ _id: req.user._id }).then((me) => {
+    Post.find({ postedBy: req.user._id })
+      .populate("postedBy", "_id name")
+      .then((mine) => {
+        res.json({ mine, following: me.following, followers: me.followers });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 });
 
 router.put("/like", requireLogin, (req, res) => {
@@ -129,6 +131,13 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
           });
       }
     });
+});
+
+router.get("/test", (req, res) => {
+  const me = User.find({ _id: req.body._id }).then((h) => {
+    res.json(h);
+  });
+  console.log(me);
 });
 
 module.exports = router;
