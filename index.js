@@ -16,15 +16,19 @@ mongoose.connect(MONGOURI, {
 });
 
 // 提示信息
-let today = new Date();
-let time =
-  today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-mongoose.connection.on("connected", () => {
-  console.log("MongoDb Connected at .................", time);
-});
-mongoose.connection.on("error", (err) => {
-  console.log(time, err);
-});
+getTime = () => {
+  let today = new Date();
+  let time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  mongoose.connection.on("connected", () => {
+    console.log("MongoDb Connected at .................", time);
+  });
+  mongoose.connection.on("error", (err) => {
+    console.log(time, err);
+  });
+};
+
+getTime();
 
 app.use(cors());
 // parse the incomming request

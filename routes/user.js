@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 const Post = mongoose.model("Post");
 const User = mongoose.model("User");
+const Timer = require("../utils/Timer");
 
 // 获取一个用户名下的帖子
 router.get("/user/:id", requireLogin, (req, res) => {
@@ -85,6 +86,28 @@ router.put("/unfollow", requireLogin, (req, res) => {
       }
     }
   ).select("-password");
+});
+
+router.put("/update", requireLogin, (req, res) => {
+  // 此时要用set，否则整个document被重写为只有一个key的 pic:value
+  // const body = req.body;
+
+  User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: { pic: req.body.pic, name: req.body.name, email: req.body.email },
+    },
+    { new: true },
+    (err, result) => {
+      if (err) {
+        return res.status(422).json({ error });
+      } else {
+        res.json({ result: result, good: "修改成功" });
+        console.log(result);
+        Timer();
+      }
+    }
+  );
 });
 
 module.exports = router;
