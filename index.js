@@ -42,3 +42,5 @@ app.use(require("./routes/user"));
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
 });
+
+// npm install nodemailer nodemailer-sendgrid-transport

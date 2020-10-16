@@ -2,9 +2,22 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../keys");
+
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+// api key, email最好放在dev里面
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        "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",
+    },
+  })
+);
 
 // const requireLogin = require("../middleware/requireLogin");
 // router.get("/protected", requireLogin, (req, res) => {
@@ -35,6 +48,16 @@ router.post("/signup", (req, res) => {
           .save()
           .then((saved) => {
             if (saved) {
+              transporter
+                .sendMail({
+                  to: saved.email,
+                  from: "hpkait@hotmail.com",
+                  subject: "Sign Up Success",
+                  html: "<h1>Welcome to our website</h1>",
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
               res.json({ good: "用户信息已保存" });
             }
           })
@@ -78,6 +101,75 @@ router.post("/login", (req, res) => {
     })
     .catch((err) => {
       console.log(err, "登录出错");
+    });
+});
+
+router.post("/forget", (req, res) => {
+  // 这些代码都需要在crypto里面么？
+  // 这里做的是 存入token, 过期时，发送邮件
+  crypto.randomBytes(32, (error, buffer) => {
+    if (error) {
+      return console.log(error);
+    }
+    const token = buffer.toString("hex");
+    const inputEmail = req.body.email;
+    User.findOne({ email: inputEmail }).then((user) => {
+      if (!user) {
+        return res.status(422).json({ error: "无此用户" });
+      } else {
+        user.resetToken = token;
+        user.expireTime = Date.now() + 600000;
+        user
+          .save()
+          .then((saved) => {
+            // 此处的html链接需要换 发送邮箱需要换
+            transporter
+              .sendMail({
+                to: saved.email,
+                from: "hpkait@hotmail.com",
+                subject: "Reset Password Link",
+                html: `<h5>Click <a href="http://localhost:3000/reset/${token}">here</a> to reset your password</h5>`,
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            res.json({ good: "请登录邮箱并点击验证邮件" });
+          })
+          .catch((error) => {
+            res.json({ error: "重置失败" });
+          });
+      }
+    });
+  });
+});
+
+router.post("/reset", (req, res) => {
+  const newPassword = req.body.newPassword;
+  const tokenFromUser = req.body.token;
+  console.log(newPassword);
+  console.log(tokenFromUser);
+
+  User.findOne({ resetToken: tokenFromUser, expireTime: { $gt: Date.now() } })
+    .then((user) => {
+      if (!user) {
+        return res.status(422).json({ error: "信息有误" });
+      }
+      bcrypt.hash(newPassword, 12).then((hashed) => {
+        user.password = hashed;
+        user.resetToken = undefined;
+        user.expireTime = undefined;
+        user
+          .save()
+          .then((saved) => {
+            res.json({ good: "修改成功" });
+          })
+          .catch((err) => {
+            res.json({ err: "保存失败" });
+          });
+      });
+    })
+    .catch((err) => {
+      res.json({ err: "重置失败" });
     });
 });
 

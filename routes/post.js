@@ -11,6 +11,7 @@ router.get("/allposts", requireLogin, (req, res) => {
     // 此时populate的意思是 填入内容 不然只显示一个id
     .populate("comments.postedBy", "_id name")
     .populate("postedBy", "_id name")
+    .sort("-createdAt")
     .then((allPosts) => {
       res.json({ allPosts });
     })
@@ -24,6 +25,7 @@ router.get("/postsfromfollowings", requireLogin, (req, res) => {
   Post.find({ postedBy: { $in: req.user.following } })
     .populate("comments.postedBy", "_id name")
     .populate("postedBy", "_id name")
+    .sort("-createdAt")
     .then((posts) => {
       res.json({ posts });
     })
