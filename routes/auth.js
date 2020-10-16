@@ -5,7 +5,6 @@ const User = mongoose.model("User");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-  EMAIL: "http://localhost:3000",
 const { JWT_SECRET, SENDGRID_API, EMAIL } = require("../keys");
 
 const nodemailer = require("nodemailer");
@@ -14,7 +13,7 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: SENDGRID_API
+      api_key: SENDGRID_API,
     },
   })
 );
