@@ -23,9 +23,9 @@ const transporter = nodemailer.createTransport(
 //   res.send(req.user.email);
 // });
 
-router.get('/', (req, res) => {
-  res.send('hello from auth.js')
-})
+// router.get('/', (req, res) => {
+//   res.send('hello from auth.js')
+// })
 
 // 测试方法 postman模拟前端发送请求
 // header: {Content-Type: application/json}
