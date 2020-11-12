@@ -5,7 +5,7 @@ const User = mongoose.model('User')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { JWT_SECRET, SENDGRID_API, EMAIL, RESET_TO } = require('../keys')
+const { JWT_SECRET, SENDGRID_API, EMAIL, RESET_TO } = require('../config/keys')
 
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')

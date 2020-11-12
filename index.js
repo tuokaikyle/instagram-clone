@@ -4,11 +4,11 @@ const PORT = process.env.PORT || 5000
 // 使用这个schema
 require('./models/user')
 require('./models/post')
-const cors = require('cors')
+// const cors = require('cors')
 
 // mongoose setup
 const mongoose = require('mongoose')
-const { MONGOURI } = require('./keys')
+const { MONGOURI } = require('./config/keys')
 mongoose.connect(MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -30,13 +30,23 @@ getTime = () => {
 
 getTime()
 
-app.use(cors())
+// app.use(cors())
 // parse the incomming request
 app.use(express.json())
 // 使用这个routes
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
 app.use(require('./routes/user'))
+
+if (process.env.NODE_ENV == 'production') {
+  // 要使用static build
+  app.use(express.static('client/build'))
+  const path = require('path')
+  // 任意route, 都send index.html
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 // 设定端口PORT
 app.listen(PORT, () => {
