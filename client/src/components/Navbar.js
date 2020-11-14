@@ -60,7 +60,7 @@ const Navbar = () => {
       <nav>
         <div className='nav-wrapper white'>
           <Link to={state ? '/' : '/login'} className='brand-logo left'>
-            Instagram
+            Insta-Clone
           </Link>
           <a
             href='#'
