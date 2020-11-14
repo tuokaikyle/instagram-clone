@@ -22,7 +22,7 @@ getTime = () => {
   let time =
     today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
   mongoose.connection.on('connected', () => {
-    console.log('MongoDb Connected at .................', time)
+    console.log('MongoDb Connected at ..................', time)
   })
   mongoose.connection.on('error', (err) => {
     console.log(time, err)

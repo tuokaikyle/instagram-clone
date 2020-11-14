@@ -84,6 +84,7 @@ function App() {
   return (
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
+        {console.log(state)}
         <Navbar />
         <main>
           <Routing />

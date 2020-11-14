@@ -42,7 +42,6 @@ const Navbar = () => {
 
   const renderList = () => {
     if (state) {
-      // 这里班会列表里面的内容 所以不包含[]
       return items
     } else {
       return [
@@ -75,7 +74,7 @@ const Navbar = () => {
         </div>
       </nav>
       <ul className='sidenav' id='mobile-demo' ref={side}>
-        {items}
+        {renderList()}
       </ul>
     </div>
   )
