@@ -46,6 +46,11 @@ function Login() {
       })
   }
 
+  const quickLogin = () => {
+    setEmail('test@test.com')
+    setPassword('1234567')
+  }
+
   return (
     <div className='mycard'>
       <div className='card auth-card input-field'>
@@ -78,7 +83,14 @@ function Login() {
         <h6>
           <Link to='/forget'>Forget your password? Click here!</Link>
         </h6>
-      </div>
+      </div>{' '}
+      <button
+        className='btn waves-effect waves-light #e040fb purple accent-2 center'
+        style={{ display: 'block', margin: '0 auto' }}
+        onClick={() => quickLogin()}
+      >
+        Login with a test account
+      </button>
     </div>
   )
 }

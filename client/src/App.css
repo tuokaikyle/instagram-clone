@@ -44,3 +44,17 @@ input[type='password']:focus {
 .material-icons:hover {
   cursor: pointer;
 }
+
+#search {
+  border: 1px solid #9e9e9e;
+  border-radius: 20px;
+  margin: 0px 20px 0px 20px;
+  height: 2em;
+  box-shadow: none;
+  width: 7em;
+  padding-left: 1em;
+}
+
+main {
+  min-height: 80vh;
+}

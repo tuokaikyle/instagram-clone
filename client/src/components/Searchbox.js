@@ -28,21 +28,17 @@ const Searchbox = () => {
       })
   }
   return (
-    <form onSubmit={submitHandler} style={{ minWidth: '50vw' }}>
-      <div className='input-field'>
-        <input
-          id='search'
-          type='search'
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value)
-          }}
-        />
-        <label className='label-icon' htmlFor='search'>
-          <i className='material-icons'>search</i>
-        </label>
-        <i className='material-icons'>close</i>
-      </div>
+    <form onSubmit={submitHandler}>
+      {' '}
+      <input
+        id='search'
+        type='search'
+        placeholder='Search'
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value)
+        }}
+      />
     </form>
   )
 }

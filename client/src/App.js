@@ -15,6 +15,7 @@ import Update from './screens/Update'
 import Forget from './screens/Forget'
 import Reset from './screens/Reset'
 import SearchResult from './screens/SearchResult'
+import Footer from './components/Footer'
 
 // 要使用context, 就要使用reducer. Reducer 连接i到nitial state
 // 首先Login会导入
@@ -84,7 +85,11 @@ function App() {
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <Navbar />
-        <Routing />
+        <main>
+          <Routing />
+        </main>
+
+        <Footer />
       </BrowserRouter>
     </UserContext.Provider>
   )

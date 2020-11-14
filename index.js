@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 5000
 require('./models/user')
 require('./models/post')
 // const cors = require('cors')
+// app.use(cors())
 
 // mongoose setup
 const mongoose = require('mongoose')
@@ -30,7 +31,6 @@ getTime = () => {
 
 getTime()
 
-// app.use(cors())
 // parse the incomming request
 app.use(express.json())
 // 使用这个routes
