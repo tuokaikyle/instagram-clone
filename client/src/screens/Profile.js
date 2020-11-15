@@ -92,7 +92,7 @@ function Profile() {
                 key={idx}
                 alt=''
                 src={one.photo}
-                style={{ margin: '5px 0px', width: '30%', height: 'auto' }}
+                style={{ margin: '5px 0px', height: 'auto', width: '30%' }}
               />
             ))}
           </div>
