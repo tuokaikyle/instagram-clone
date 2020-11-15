@@ -26,7 +26,7 @@ const Routing = () => {
   const history = useHistory()
 
   // 这一行是为了用户未退出，例如重启浏览器，从localstorage获取state信息
-  const { state, dispatch } = useContext(UserContext)
+  const { dispatch } = useContext(UserContext)
 
   // 实现的是首次登陆的跳转
   useEffect(() => {

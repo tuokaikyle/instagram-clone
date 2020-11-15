@@ -28,12 +28,12 @@ input[type='password']:focus {
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
-.item {
+/* .item {
   width: 30%;
-}
+} */
 
 .home-card {
   max-width: 500px;
@@ -55,6 +55,6 @@ input[type='password']:focus {
   padding-left: 1em;
 }
 
-/* main {
+main {
   min-height: 80vh;
-} */
+}

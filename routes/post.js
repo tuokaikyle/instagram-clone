@@ -47,6 +47,7 @@ router.post('/createpost', requireLogin, (req, res) => {
     .save()
     .then((result) => {
       res.json({ posted: result, good: 'Successful' })
+      // console.log(result)
     })
     .catch((err) => {
       console.log(err)

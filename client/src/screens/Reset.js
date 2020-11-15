@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import M from 'materialize-css'
 import { useParams } from 'react-router-dom'
 

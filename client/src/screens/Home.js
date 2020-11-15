@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 function Home() {
   const [data, setData] = useState([])
-  const { state, dispatch } = useContext(UserContext)
+  const { state } = useContext(UserContext)
   useEffect(() => {
     fetch('/allposts', {
       method: 'get',

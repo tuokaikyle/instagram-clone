@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { UserContext } from '../App'
 
 const Searchbox = () => {
   const history = useHistory()
   const [search, setSearch] = useState('')
-  const { state, dispatch } = useContext(UserContext)
+  const { dispatch } = useContext(UserContext)
 
   const submitHandler = (e) => {
     e.preventDefault()

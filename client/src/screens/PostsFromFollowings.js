@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const PostsFromFollowings = () => {
   const [data, setData] = useState([])
-  const { state, dispatch } = useContext(UserContext)
+  const { state } = useContext(UserContext)
   useEffect(() => {
     fetch('/postsfromfollowings', {
       method: 'get',

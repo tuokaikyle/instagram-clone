@@ -58,6 +58,7 @@ const CreatePost = () => {
         console.log(err)
       })
   }
+  // console.log(urlFromCloud)
   return (
     <div
       className='card input-field'

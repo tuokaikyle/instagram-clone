@@ -5,12 +5,12 @@ const Footer = () => {
     <footer className='page-footer white'>
       <div className='container'>
         <div className='row'>
-          <h5 className='grey-text text-darken-2'>Note</h5>
+          <h5 className='grey-text text-darken-2'>Developer's Notes</h5>
           <p className='grey-text text-darken-4'>
-            This project is clone of Instagram, which uses react useContext and
-            useReducer to manage the state, materializecss to outline the UI,
-            cloudinary to store the uploaded image and sendgrid to manage the
-            emails for password-reseting.
+            This project is a clone of Instagram, which uses react useContext
+            and useReducer to manage the state, materializecss to outline the
+            UI, cloudinary to store the uploaded image and sendgrid to manage
+            the emails for password-reseting.
           </p>
           <p className='grey-text text-darken-4'>
             Originally forked from{' '}

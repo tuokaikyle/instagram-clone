@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 function Profile() {
   const [myPosts, setMyPosts] = useState([])
   // 试着使用
-  const { state, dispatch } = useContext(UserContext)
+  const { state } = useContext(UserContext)
 
   useEffect(() => {
     fetch('/myposts', {
@@ -85,8 +85,15 @@ function Profile() {
             </div>
           </div>
           <div className='gallery'>
+            {/* <div className='item'> */}
             {myPosts.map((one, idx) => (
-              <img className='item' key={idx} alt='' src={one.photo} />
+              <img
+                className='col s1'
+                key={idx}
+                alt=''
+                src={one.photo}
+                style={{ margin: '5px 0px', width: '30%', height: 'auto' }}
+              />
             ))}
           </div>
         </div>

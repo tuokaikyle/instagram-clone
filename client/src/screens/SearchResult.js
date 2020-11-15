@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 function SearchResult() {
   const [data, setData] = useState([])
-  const { state, dispatch } = useContext(UserContext)
+  const { state } = useContext(UserContext)
   useEffect(() => {
     // set本页要展示的数据为(state里面的这一项。该项在fetch之后，dispatch到reducer)
     if (state) {
