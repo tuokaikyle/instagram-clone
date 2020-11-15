@@ -180,7 +180,7 @@ function UserProfile() {
           </div>
           <div className='gallery'>
             {data.posts.map((one, idx) => (
-              <img className='item' key={idx} alt='' src={one.photo} />
+              <img className='item col s1' key={idx} alt='' src={one.photo} />
             ))}
           </div>
         </div>

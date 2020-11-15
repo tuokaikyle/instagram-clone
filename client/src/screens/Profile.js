@@ -84,16 +84,9 @@ function Profile() {
               </div>
             </div>
           </div>
-          {/* <div className='gallery'> */}
-          <div className='gallery2'>
+          <div className='gallery'>
             {myPosts.map((one, idx) => (
-              <img
-                className='col s1'
-                key={idx}
-                alt=''
-                src={one.photo}
-                style={{ margin: '1%', height: 'auto', width: '30%' }}
-              />
+              <img className='item col s1' key={idx} alt='' src={one.photo} />
             ))}
           </div>
         </div>

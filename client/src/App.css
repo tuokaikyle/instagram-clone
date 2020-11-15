@@ -31,9 +31,11 @@ input[type='password']:focus {
   justify-content: space-between;
 } */
 
-/* .item {
+.item {
   width: 30%;
-} */
+  height: auto;
+  margin: 1%;
+}
 
 .home-card {
   max-width: 500px;
