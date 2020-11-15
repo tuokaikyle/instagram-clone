@@ -20,6 +20,7 @@
     "nodemailer": "^6.4.14",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^2.0.5",
+    "react-modal-image": "^2.5.0",
     "to": "^0.2.9",
     "update": "^0.7.4"
   }
