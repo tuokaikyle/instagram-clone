@@ -163,6 +163,7 @@ function UserProfile() {
               {data.user.followers.includes(state._id) ? (
                 <button
                   className='btn #64b5f6 blue darken-1'
+                  style={{ margin: '1em 0em' }}
                   onClick={() => unfollow()}
                 >
                   UnFollow
@@ -170,6 +171,7 @@ function UserProfile() {
               ) : (
                 <button
                   className='btn #64b5f6 blue darken-1'
+                  style={{ margin: '1em 0em' }}
                   onClick={() => follow()}
                 >
                   Follow
