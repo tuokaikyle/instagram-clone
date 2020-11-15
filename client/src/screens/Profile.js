@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react'
 import { useEffect } from 'react'
 import { UserContext } from '../App'
 import { Link } from 'react-router-dom'
+import ModalImage from 'react-modal-image'
 
 function Profile() {
   const [myPosts, setMyPosts] = useState([])
-  // 试着使用
-  const { state } = useContext(UserContext)
+  const { state, dispatch } = useContext(UserContext)
 
   useEffect(() => {
     fetch('/myposts', {
@@ -20,17 +20,14 @@ function Profile() {
         console.log(err)
       })
   }, [])
+
   return (
     <>
-      {/* {console.log(myPosts)} */}
-      {/* {console.log(state)} */}
-
       {state && myPosts != [] ? (
         <div
           style={{ maxWidth: '550px', margin: '0px auto' }}
           className='all-1'
         >
-          {/* {console.log(state)} */}
           <div
             className='up-2'
             style={{
@@ -86,6 +83,14 @@ function Profile() {
           </div>
           <div className='gallery'>
             {myPosts.map((one, idx) => (
+              //   <ModalImage
+              //     className='item col s1'
+              //     key={idx}
+              //     alt=''
+              //     small={one.photo}
+              //     large={one.photo}
+              //   />
+              // ))}
               <img className='item col s1' key={idx} alt='' src={one.photo} />
             ))}
           </div>

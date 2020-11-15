@@ -34,5 +34,8 @@ export const reducer = (state, action) => {
       searchResults: action.payload,
     }
   }
+  if (action.type === 'MODAL_IMAGE') {
+    return { ...state, modal_image: action.payload }
+  }
   return state
 }
