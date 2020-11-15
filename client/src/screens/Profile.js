@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import { useEffect } from 'react'
 import { UserContext } from '../App'
 import { Link } from 'react-router-dom'
-import ModalImage from 'react-modal-image'
 
 function Profile() {
   const [myPosts, setMyPosts] = useState([])
@@ -83,14 +82,6 @@ function Profile() {
           </div>
           <div className='gallery'>
             {myPosts.map((one, idx) => (
-              //   <ModalImage
-              //     className='item col s1'
-              //     key={idx}
-              //     alt=''
-              //     small={one.photo}
-              //     large={one.photo}
-              //   />
-              // ))}
               <img className='item col s1' key={idx} alt='' src={one.photo} />
             ))}
           </div>
