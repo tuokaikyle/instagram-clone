@@ -1,18 +1,18 @@
-import React, { useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { useContext } from 'react'
-import { UserContext } from '../App'
-import { useEffect } from 'react'
-import Searchbox from './Searchbox'
-import M from 'materialize-css'
+import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../App';
+import { useEffect } from 'react';
+import Searchbox from './Searchbox';
+import M from 'materialize-css';
 
 const Navbar = () => {
-  const { state, dispatch } = useContext(UserContext)
-  const side = useRef(null)
+  const { state, dispatch } = useContext(UserContext);
+  const side = useRef(null);
 
   useEffect(() => {
-    M.Sidenav.init(side.current)
-  }, [])
+    M.Sidenav.init(side.current);
+  }, []);
 
   const items = [
     <li key='search'>
@@ -31,18 +31,18 @@ const Navbar = () => {
       <Link
         to='/login'
         onClick={() => {
-          localStorage.clear()
-          dispatch({ type: 'CLEAR' })
+          localStorage.clear();
+          dispatch({ type: 'CLEAR' });
         }}
       >
         Logout
       </Link>
     </li>,
-  ]
+  ];
 
   const renderList = () => {
     if (state) {
-      return items
+      return items;
     } else {
       return [
         <li key='signup'>
@@ -51,15 +51,15 @@ const Navbar = () => {
         <li key='login'>
           <Link to='/login'>Login</Link>
         </li>,
-      ]
+      ];
     }
-  }
+  };
   return (
     <div>
       <nav>
         <div className='nav-wrapper white'>
           <Link to={state ? '/' : '/login'} className='brand-logo left'>
-            Insta-Clone
+            Instagram-Clone
           </Link>
           <a
             href='#'
@@ -77,7 +77,7 @@ const Navbar = () => {
         {renderList()}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
