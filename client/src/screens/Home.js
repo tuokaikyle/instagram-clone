@@ -1,13 +1,13 @@
-import React from 'react'
-import { useState } from 'react'
-import { useContext } from 'react'
-import { UserContext } from '../App'
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../App';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
-  const [data, setData] = useState([])
-  const { state } = useContext(UserContext)
+  const [data, setData] = useState([]);
+  const { state } = useContext(UserContext);
   useEffect(() => {
     fetch('/allposts', {
       method: 'get',
@@ -18,8 +18,8 @@ function Home() {
     })
       .then((res) => res.json())
       .then((results) => setData(results.allPosts))
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
   const likePost = (id) => {
     fetch('/like', {
@@ -38,17 +38,17 @@ function Home() {
             // return res;
             // 如果后端没有populate
             // 那么这里得
-            return { ...one, likes: res.likes }
+            return { ...one, likes: res.likes };
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateLike)
+        });
+        setData(updateLike);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const unLikePost = (id) => {
     fetch('/unlike', {
       method: 'put',
@@ -65,18 +65,18 @@ function Home() {
         const updateUnLike = data.map((one) => {
           if (one._id === res._id) {
             // 如果这里是 return res 那么后端就得populate
-            return { ...one, likes: res.likes }
+            return { ...one, likes: res.likes };
             // return res
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateUnLike)
+        });
+        setData(updateUnLike);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const makeComment = (text, postId) => {
     fetch('/comment', {
       method: 'put',
@@ -90,18 +90,18 @@ function Home() {
       .then((res) => {
         const updateComment = data.map((one) => {
           if (one._id === res._id) {
-            return res
+            return res;
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateComment)
+        });
+        setData(updateComment);
       })
 
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const deletePost = (postId) => {
     fetch(`/deletepost/${postId}`, {
@@ -112,17 +112,17 @@ function Home() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
+        console.log(res);
         const newData = data.filter((one) => {
           // 不相等的留下
-          return one._id !== res._id
-        })
-        setData(newData)
+          return one._id !== res._id;
+        });
+        setData(newData);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -152,7 +152,7 @@ function Home() {
                       className='material-icons'
                       style={{ float: 'right' }}
                       onClick={() => {
-                        deletePost(one._id)
+                        deletePost(one._id);
                       }}
                     >
                       delete
@@ -170,7 +170,7 @@ function Home() {
                       className='material-icons'
                       style={{ color: 'red' }}
                       onClick={() => {
-                        unLikePost(one._id)
+                        unLikePost(one._id);
                       }}
                     >
                       favorite
@@ -180,7 +180,7 @@ function Home() {
                       className='material-icons'
                       style={{ color: 'gray' }}
                       onClick={() => {
-                        likePost(one._id)
+                        likePost(one._id);
                       }}
                     >
                       favorite_border
@@ -200,23 +200,23 @@ function Home() {
                   ))}
                   <form
                     onSubmit={(e) => {
-                      e.preventDefault()
+                      e.preventDefault();
                       // e.target[0]的意思是form中 的 第一个<>内容
-                      makeComment(e.target[0].value, one._id)
+                      makeComment(e.target[0].value, one._id);
                     }}
                   >
                     <input type='text' placeholder='Add a comment' />
                   </form>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       ) : (
         'loading'
       )}
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

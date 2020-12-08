@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import M from 'materialize-css'
-import { UserContext } from '../App'
+import React, { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import M from 'materialize-css';
+import { UserContext } from '../App';
 
 function Login() {
-  const history = useHistory()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { dispatch } = useContext(UserContext)
+  const history = useHistory();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { dispatch } = useContext(UserContext);
 
   const PostData = () => {
     fetch('/login', {
@@ -26,30 +26,30 @@ function Login() {
         // 测试用 前端浏览器中用这个
         // console.log(data);
         if (data.error) {
-          return M.toast({ html: data.error, classes: '#e53935 red darken-1' })
+          return M.toast({ html: data.error, classes: '#e53935 red darken-1' });
         } else {
           // 后端返回的数据 包含token, user{_id, name, email}
           // 把信息存到localstorage里面。此时只可以是string
-          localStorage.setItem('jwt', data.token)
-          localStorage.setItem('user', JSON.stringify(data.user))
+          localStorage.setItem('jwt', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
           // 传递：{标签：USER， 数据：data.user}
-          dispatch({ type: 'USER', payload: data.user })
+          dispatch({ type: 'USER', payload: data.user });
           M.toast({
             html: data.good,
             classes: '#43a047 green darken-1',
-          })
-          history.push('/')
+          });
+          history.push('/');
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const quickLogin = () => {
-    setEmail('test@test.com')
-    setPassword('1234567')
-  }
+    setEmail('test@test.com');
+    setPassword('1234567');
+  };
 
   return (
     <div className='mycard'>
@@ -60,7 +60,7 @@ function Login() {
           placeholder='Email'
           value={email}
           onChange={(e) => {
-            setEmail(e.target.value)
+            setEmail(e.target.value);
           }}
         />
         <input
@@ -68,7 +68,7 @@ function Login() {
           placeholder='Password'
           value={password}
           onChange={(e) => {
-            setPassword(e.target.value)
+            setPassword(e.target.value);
           }}
         />
         <button
@@ -85,14 +85,14 @@ function Login() {
         </h6>
       </div>{' '}
       <button
-        className='btn waves-effect waves-light #e040fb purple accent-2 center'
-        style={{ display: 'block', margin: '0 auto' }}
+        className='btn waves-effect waves-light #e040fb pink accent-2 center'
+        style={{ display: 'block', margin: '2em auto' }}
         onClick={() => quickLogin()}
       >
         Login with a test account
       </button>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
