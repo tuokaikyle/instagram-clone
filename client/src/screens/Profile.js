@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react'
-import { useEffect } from 'react'
-import { UserContext } from '../App'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react';
+import { useEffect } from 'react';
+import { UserContext } from '../App';
+import { Link } from 'react-router-dom';
+import ModalImage from 'react-modal-image';
 
 function Profile() {
-  const [myPosts, setMyPosts] = useState([])
-  const { state, dispatch } = useContext(UserContext)
+  const [myPosts, setMyPosts] = useState([]);
+  const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
     fetch('/myposts', {
@@ -13,12 +14,12 @@ function Profile() {
     })
       .then((res) => res.json())
       .then((res) => {
-        setMyPosts(res.mine)
+        setMyPosts(res.mine);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -32,7 +33,8 @@ function Profile() {
             style={{
               display: 'flex',
               justifyContent: 'space-around',
-              margin: '18px 0px',
+              padding: '15px 0px',
+              marginBottom: '10px',
               borderBottom: '1px solid grey',
             }}
           >
@@ -80,9 +82,14 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className='gallery'>
+          <div className='row'>
             {myPosts.map((one, idx) => (
-              <img className='item col s1' key={idx} alt='' src={one.photo} />
+              <ModalImage
+                className='col s4'
+                key={idx}
+                small={one.photo}
+                large={one.photo}
+              />
             ))}
           </div>
         </div>
@@ -90,7 +97,7 @@ function Profile() {
         'loading'
       )}
     </>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

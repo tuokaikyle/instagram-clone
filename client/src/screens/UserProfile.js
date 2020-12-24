@@ -1,14 +1,15 @@
-import React, { useState, useContext } from 'react'
-import { useEffect } from 'react'
-import { UserContext } from '../App'
-import { useParams } from 'react-router-dom'
+import React, { useState, useContext } from 'react';
+import { useEffect } from 'react';
+import { UserContext } from '../App';
+import { useParams } from 'react-router-dom';
+import ModalImage from 'react-modal-image';
 
 function UserProfile() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
   // 试着使用
-  const { state, dispatch } = useContext(UserContext)
+  const { state, dispatch } = useContext(UserContext);
   // 获取url的后缀
-  const { userid } = useParams()
+  const { userid } = useParams();
   // console.log(userid);
   // const [showfollow, setShowFollow] = useState(
   //   state ? !state.following.includes(userid) : true
@@ -24,13 +25,13 @@ function UserProfile() {
     })
       .then((res) => res.json())
       .then((results) => {
-        setData(results)
+        setData(results);
         // console.log(results.user.followers);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
   const follow = () => {
     fetch('/follow', {
       method: 'put',
@@ -49,9 +50,9 @@ function UserProfile() {
         dispatch({
           type: 'FOLLOW',
           payload: { following: res.me.following, followers: res.me.followers },
-        })
+        });
         // 设置 me的新的local storage
-        localStorage.setItem('user', JSON.stringify(res.me))
+        localStorage.setItem('user', JSON.stringify(res.me));
 
         // 设置新的data 此时data应该是 这个用户的信息 和他的帖子的信息
         // 这里只更新用户信息 在用户里面，只更新followers信息
@@ -62,15 +63,15 @@ function UserProfile() {
               ...prevState.user,
               followers: [...prevState.user.followers, res.me._id],
             },
-          }
+          };
           // console.log(prevState);
-        })
+        });
         // setShowFollow(true);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const unfollow = () => {
     fetch('/unfollow', {
       method: 'put',
@@ -89,32 +90,32 @@ function UserProfile() {
         dispatch({
           type: 'FOLLOW',
           payload: { following: res.me.following, followers: res.me.followers },
-        })
+        });
         // 设置 me的新的local storage
-        localStorage.setItem('user', JSON.stringify(res.me))
+        localStorage.setItem('user', JSON.stringify(res.me));
 
         // 设置新的data 此时data应该是 这个用户的信息 和他的帖子的信息
         // 这里只更新用户信息 在用户里面，只更新followers信息
         setData((prevState) => {
           const withOutMe = prevState.user.followers.filter(
             (i) => i !== res.me._id
-          )
+          );
           return {
             ...prevState,
             user: {
               ...prevState.user,
               followers: withOutMe,
             },
-          }
+          };
           // console.log(prevState);
-        })
+        });
         // setShowFollow(true);
       })
       .catch((err) => {
-        console.log(err)
-      })
-    console.log(data.user.followers)
-  }
+        console.log(err);
+      });
+    console.log(data.user.followers);
+  };
   return (
     <>
       {data ? (
@@ -177,12 +178,17 @@ function UserProfile() {
                   Follow
                 </button>
               )}
-              {/* {console.log(data.user.followers.includes(state._id))} */}
             </div>
           </div>
-          <div className='gallery'>
+          <div className='row'>
             {data.posts.map((one, idx) => (
-              <img className='item col s1' key={idx} alt='' src={one.photo} />
+              // <img className='item col s1' key={idx} alt='' src={one.photo} />
+              <ModalImage
+                className='col s4'
+                key={idx}
+                small={one.photo}
+                large={one.photo}
+              />
             ))}
           </div>
         </div>
@@ -190,7 +196,7 @@ function UserProfile() {
         <h4>Loading...</h4>
       )}
     </>
-  )
+  );
 }
 
-export default UserProfile
+export default UserProfile;

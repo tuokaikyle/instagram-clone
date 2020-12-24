@@ -32,7 +32,7 @@ function HomeVisitor() {
   return (
     <>
       {data ? (
-        <div className='home'>
+        <div className='container'>
           {data.map((one) => {
             return (
               <div className='card home-card' key={one._id}>
@@ -40,7 +40,7 @@ function HomeVisitor() {
                   onClick={() => {
                     likePost(one._id);
                   }}
-                  style={{ padding: '10px 0px 0px 5px' }}
+                  style={{ padding: '10px 0px 5px 10px' }}
                 >
                   {one.postedBy.name}
                 </h5>

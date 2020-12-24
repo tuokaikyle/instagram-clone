@@ -5,8 +5,8 @@ import { UserContext } from '../App';
 
 function Login() {
   const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('test@test.com');
+  const [password, setPassword] = useState('1234567');
   const { dispatch } = useContext(UserContext);
 
   const PostData = () => {

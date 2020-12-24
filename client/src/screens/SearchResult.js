@@ -1,19 +1,19 @@
-import React from 'react'
-import { useState } from 'react'
-import { useContext } from 'react'
-import { UserContext } from '../App'
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../App';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function SearchResult() {
-  const [data, setData] = useState([])
-  const { state } = useContext(UserContext)
+  const [data, setData] = useState([]);
+  const { state } = useContext(UserContext);
   useEffect(() => {
     // set本页要展示的数据为(state里面的这一项。该项在fetch之后，dispatch到reducer)
     if (state) {
-      setData(state.searchResults)
+      setData(state.searchResults);
     }
-  }, [state])
+  }, [state]);
 
   const likePost = (id) => {
     fetch('/like', {
@@ -32,17 +32,17 @@ function SearchResult() {
             // return res;
             // 如果后端没有populate
             // 那么这里得
-            return { ...one, likes: res.likes }
+            return { ...one, likes: res.likes };
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateLike)
+        });
+        setData(updateLike);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const unLikePost = (id) => {
     fetch('/unlike', {
       method: 'put',
@@ -59,18 +59,18 @@ function SearchResult() {
         const updateUnLike = data.map((one) => {
           if (one._id === res._id) {
             // 如果这里是 return res 那么后端就得populate
-            return { ...one, likes: res.likes }
+            return { ...one, likes: res.likes };
             // return res
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateUnLike)
+        });
+        setData(updateUnLike);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const makeComment = (text, postId) => {
     fetch('/comment', {
       method: 'put',
@@ -84,18 +84,18 @@ function SearchResult() {
       .then((res) => {
         const updateComment = data.map((one) => {
           if (one._id === res._id) {
-            return res
+            return res;
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateComment)
+        });
+        setData(updateComment);
       })
 
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const deletePost = (postId) => {
     fetch(`/deletepost/${postId}`, {
@@ -106,27 +106,27 @@ function SearchResult() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
+        console.log(res);
         const newData = data.filter((one) => {
           // 不相等的留下
-          return one._id !== res._id
-        })
-        setData(newData)
+          return one._id !== res._id;
+        });
+        setData(newData);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   return (
     <>
       {data && state ? (
-        <div className='home'>
+        <div className='container'>
           {data.map((one) => {
             return (
               <div className='card home-card' key={one._id}>
                 {/* h5包含一个link和一个trash 其中Link包含条转条件，名字 
       trash包含显示条件，删除方法*/}
-                <h5>
+                <h5 style={{ padding: '10px 0px 5px 10px' }}>
                   {
                     <Link
                       to={
@@ -143,9 +143,9 @@ function SearchResult() {
                   {one.postedBy._id === state._id && (
                     <i
                       className='material-icons'
-                      style={{ float: 'right' }}
+                      style={{ float: 'right', paddingRight: '5px' }}
                       onClick={() => {
-                        deletePost(one._id)
+                        deletePost(one._id);
                       }}
                     >
                       delete
@@ -163,7 +163,7 @@ function SearchResult() {
                       className='material-icons'
                       style={{ color: 'red' }}
                       onClick={() => {
-                        unLikePost(one._id)
+                        unLikePost(one._id);
                       }}
                     >
                       favorite
@@ -173,7 +173,7 @@ function SearchResult() {
                       className='material-icons'
                       style={{ color: 'gray' }}
                       onClick={() => {
-                        likePost(one._id)
+                        likePost(one._id);
                       }}
                     >
                       favorite_border
@@ -193,23 +193,23 @@ function SearchResult() {
                   ))}
                   <form
                     onSubmit={(e) => {
-                      e.preventDefault()
+                      e.preventDefault();
                       // e.target[0]的意思是form中 的 第一个<>内容
-                      makeComment(e.target[0].value, one._id)
+                      makeComment(e.target[0].value, one._id);
                     }}
                   >
                     <input type='text' placeholder='Add a comment' />
                   </form>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       ) : (
         'loading'
       )}
     </>
-  )
+  );
 }
 
-export default SearchResult
+export default SearchResult;

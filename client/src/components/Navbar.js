@@ -58,7 +58,11 @@ const Navbar = () => {
     <div>
       <nav>
         <div className='nav-wrapper white'>
-          <Link to={state ? '/' : '/login'} className='brand-logo left'>
+          <Link
+            to={state ? '/' : '/login'}
+            className='brand-logo left'
+            style={{ paddingLeft: '10px' }}
+          >
             Instagram-Clone
           </Link>
           <a

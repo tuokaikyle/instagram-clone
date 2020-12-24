@@ -1,13 +1,13 @@
-import React from 'react'
-import { useState } from 'react'
-import { useContext } from 'react'
-import { UserContext } from '../App'
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../App';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const PostsFromFollowings = () => {
-  const [data, setData] = useState([])
-  const { state } = useContext(UserContext)
+  const [data, setData] = useState([]);
+  const { state } = useContext(UserContext);
   useEffect(() => {
     fetch('/postsfromfollowings', {
       method: 'get',
@@ -18,8 +18,8 @@ const PostsFromFollowings = () => {
     })
       .then((res) => res.json())
       .then((results) => setData(results.posts))
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
   const likePost = (id) => {
     fetch('/like', {
@@ -38,17 +38,17 @@ const PostsFromFollowings = () => {
             // return res;
             // 如果后端没有populate
             // 那么这里得
-            return { ...one, likes: res.likes }
+            return { ...one, likes: res.likes };
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateLike)
+        });
+        setData(updateLike);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const unLikePost = (id) => {
     fetch('/unlike', {
       method: 'put',
@@ -65,18 +65,18 @@ const PostsFromFollowings = () => {
         const updateUnLike = data.map((one) => {
           if (one._id === res._id) {
             // 如果这里是 return res 那么后端就得populate
-            return { ...one, likes: res.likes }
+            return { ...one, likes: res.likes };
             // return res
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateUnLike)
+        });
+        setData(updateUnLike);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const makeComment = (text, postId) => {
     fetch('/comment', {
       method: 'put',
@@ -90,18 +90,18 @@ const PostsFromFollowings = () => {
       .then((res) => {
         const updateComment = data.map((one) => {
           if (one._id === res._id) {
-            return res
+            return res;
           } else {
-            return one
+            return one;
           }
-        })
-        setData(updateComment)
+        });
+        setData(updateComment);
       })
 
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const deletePost = (postId) => {
     fetch(`/deletepost/${postId}`, {
@@ -114,22 +114,22 @@ const PostsFromFollowings = () => {
       .then((res) => {
         const newData = data.filter((one) => {
           // 不相等的留下
-          return one._id !== res._id
-        })
-        setData(newData)
+          return one._id !== res._id;
+        });
+        setData(newData);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   return (
-    <div className='home'>
+    <div className='container'>
       {data.map((one) => {
         return (
           <div className='card home-card' key={one._id}>
             {/* h5包含一个link和一个trash 其中Link包含条转条件，名字 
             trash包含显示条件，删除方法*/}
-            <h5>
+            <h5 style={{ padding: '10px 0px 5px 10px' }}>
               {
                 <Link
                   to={
@@ -141,19 +141,6 @@ const PostsFromFollowings = () => {
                   {one.postedBy.name}
                 </Link>
               }
-
-              {/* 序号相等 && <i> */}
-              {one.postedBy._id === state._id && (
-                <i
-                  className='material-icons'
-                  style={{ float: 'right' }}
-                  onClick={() => {
-                    deletePost(one._id)
-                  }}
-                >
-                  delete
-                </i>
-              )}
             </h5>
 
             <div className='card-image'>
@@ -166,7 +153,7 @@ const PostsFromFollowings = () => {
                   className='material-icons'
                   style={{ color: 'red' }}
                   onClick={() => {
-                    unLikePost(one._id)
+                    unLikePost(one._id);
                   }}
                 >
                   favorite
@@ -176,7 +163,7 @@ const PostsFromFollowings = () => {
                   className='material-icons'
                   style={{ color: 'gray' }}
                   onClick={() => {
-                    likePost(one._id)
+                    likePost(one._id);
                   }}
                 >
                   favorite_border
@@ -196,19 +183,19 @@ const PostsFromFollowings = () => {
               ))}
               <form
                 onSubmit={(e) => {
-                  e.preventDefault()
+                  e.preventDefault();
                   // e.target[0]的意思是form中 的 第一个<>内容
-                  makeComment(e.target[0].value, one._id)
+                  makeComment(e.target[0].value, one._id);
                 }}
               >
                 <input type='text' placeholder='Add a comment' />
               </form>
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default PostsFromFollowings
+export default PostsFromFollowings;

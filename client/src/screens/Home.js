@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 function Home() {
   const [data, setData] = useState([]);
   const { state } = useContext(UserContext);
+
   useEffect(() => {
     fetch('/allposts', {
       method: 'get',
@@ -127,13 +128,13 @@ function Home() {
   return (
     <>
       {data && state ? (
-        <div className='home'>
+        <div className='container'>
           {data.map((one) => {
             return (
               <div className='card home-card' key={one._id}>
                 {/* h5包含一个link和一个trash 其中Link包含条转条件，名字 
       trash包含显示条件，删除方法*/}
-                <h5>
+                <h5 style={{ padding: '10px 0px 5px 10px' }}>
                   {
                     <Link
                       to={
@@ -141,7 +142,6 @@ function Home() {
                           ? '/profile'
                           : `/profile/${one.postedBy._id}`
                       }
-                      style={{ padding: '10px 0px 0px 5px' }}
                     >
                       {one.postedBy.name}
                     </Link>
@@ -151,7 +151,7 @@ function Home() {
                   {one.postedBy._id === state._id && (
                     <i
                       className='material-icons'
-                      style={{ float: 'right' }}
+                      style={{ float: 'right', paddingRight: '5px' }}
                       onClick={() => {
                         deletePost(one._id);
                       }}
@@ -187,7 +187,6 @@ function Home() {
                       favorite_border
                     </i>
                   )}
-
                   <h6>{one.likes.length} people like this post</h6>
                   <h6>{one.title}</h6>
                   <p>{one.body}</p>
