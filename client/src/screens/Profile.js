@@ -34,39 +34,81 @@ function Profile() {
               borderBottom: '1px solid grey',
             }}
           >
-            <div style={{ margin: 'auto 5px' }}>
+            <div
+              style={{
+                maxWidth: '120px',
+                height: 'auto',
+                marginBlock: 'auto',
+                marginRight: '20px',
+              }}
+            >
               <img
                 style={{
-                  width: '160px',
-                  height: '160px',
-                  borderRadius: '80px',
+                  width: '100%',
+                  borderRadius: '50%',
                 }}
                 src={state.pic}
                 alt=''
               />
             </div>
-            <div className='col s5 offset-s1'>
+            <div style={{ marginLeft: '10px' }}>
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                 }}
               >
-                <h4>{state.name}</h4>
-                <i className='material-icons' style={{ marginTop: '1.25em' }}>
+                <h5>{state.name}</h5>
+                <i className='material-icons' style={{ marginTop: '15px' }}>
                   <Link to='/update'>edit</Link>
                 </i>
               </div>
-              <h5>{state.email}</h5>
+              <h6 style={{ margin: '0px 0px 10px 0px' }}>{state.email}</h6>
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                 }}
               >
-                <h6>{myPosts.length} Posts</h6>
-                <h6>{state.followers.length} Followers</h6>
-                <h6>{state.following.length} Following</h6>
+                <div>
+                  <div
+                    style={{ display: 'flex', justifyContent: 'space-between' }}
+                  >
+                    <div>
+                      Posts
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {myPosts.length}
+                      </div>
+                    </div>
+                    <div style={{ padding: '0px 20px' }}>
+                      Followers
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {state.followers.length}
+                      </div>
+                    </div>
+                    <div>
+                      Following
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {state.following.length}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

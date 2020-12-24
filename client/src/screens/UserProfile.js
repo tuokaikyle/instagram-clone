@@ -124,58 +124,95 @@ function UserProfile() {
           {/* state是me登录用户 */}
 
           <div
-            className='row'
+            className=''
             style={{
               display: 'flex',
               padding: '15px 0px',
-              marginBottom: '15px',
-              borderBottom: '1px solid grey',
             }}
           >
-            <div style={{ margin: 'auto 5px' }}>
+            <div
+              style={{
+                maxWidth: '120px',
+                height: 'auto',
+                marginBlock: 'auto',
+                marginRight: '20px',
+              }}
+            >
               <img
                 style={{
-                  width: '160px',
-                  height: '160px',
-                  borderRadius: '80px',
+                  width: '100%',
+                  borderRadius: '50%',
                 }}
                 src={data.user.pic}
                 alt=''
               />
             </div>
-            <div className='col s5 offset-s1'>
-              <h4>{data.user.name}</h4>
-              <h5>{data.user.email}</h5>
+            <div style={{ marginLeft: '10px' }}>
+              <h5>{data.user.name}</h5>
+              <h6 style={{ margin: '0px 0px 10px 0px' }}>{data.user.email}</h6>
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                 }}
               >
-                <h6>{data.posts.length} Posts</h6>
-                <h6>{data.user.followers.length} Followers</h6>
-                <h6>{data.user.following.length} Following</h6>
+                <div>
+                  <div
+                    style={{ display: 'flex', justifyContent: 'space-between' }}
+                  >
+                    <div>
+                      Posts
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {data.posts.length}
+                      </div>
+                    </div>
+                    <div style={{ padding: '0px 20px' }}>
+                      Followers
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {data.user.followers.length}
+                      </div>
+                    </div>
+                    <div>
+                      Following
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {data.user.following.length}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              {/* 如果data的followers中包含state._id 则显示unfowllow, 否则follow */}
-              {data.user.followers.includes(state._id) ? (
-                <button
-                  className='btn #64b5f6 blue darken-1'
-                  style={{ margin: '1em 0em' }}
-                  onClick={() => unfollow()}
-                >
-                  UnFollow
-                </button>
-              ) : (
-                <button
-                  className='btn #64b5f6 blue darken-1'
-                  style={{ margin: '1em 0em' }}
-                  onClick={() => follow()}
-                >
-                  Follow
-                </button>
-              )}
             </div>
           </div>
+          {/* 如果data的followers中包含state._id 则显示unfowllow, 否则follow */}
+          {data.user.followers.includes(state._id) ? (
+            <button className='btn pink btnFollow' onClick={() => unfollow()}>
+              UnFollow
+            </button>
+          ) : (
+            <button
+              className='btn #64b5f6 blue darken-1 btnFollow'
+              onClick={() => follow()}
+            >
+              Follow
+            </button>
+          )}
+          <hr style={{ margin: '24px 0px' }} />
+
           <div className='row'>
             {data.posts.map((one, idx) => (
               // <img className='item col s1' key={idx} alt='' src={one.photo} />
