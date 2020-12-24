@@ -24,21 +24,17 @@ function Profile() {
   return (
     <>
       {state && myPosts != [] ? (
-        <div
-          style={{ maxWidth: '550px', margin: '0px auto' }}
-          className='all-1'
-        >
+        <div style={{ maxWidth: '700px' }} className='container'>
           <div
-            className='up-2'
+            className='row'
             style={{
               display: 'flex',
-              justifyContent: 'space-around',
               padding: '15px 0px',
-              marginBottom: '10px',
+              marginBottom: '15px',
               borderBottom: '1px solid grey',
             }}
           >
-            <div className='pic-3'>
+            <div style={{ margin: 'auto 5px' }}>
               <img
                 style={{
                   width: '160px',
@@ -49,31 +45,23 @@ function Profile() {
                 alt=''
               />
             </div>
-            <div className='name-3'>
+            <div className='col s5 offset-s1'>
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  width: '108%',
                 }}
               >
                 <h4>{state.name}</h4>
-                <div
-                  style={{
-                    margin: '1.52rem 0 .912rem',
-                  }}
-                >
-                  <i className='material-icons'>
-                    <Link to='/update'>edit</Link>
-                  </i>
-                </div>
+                <i className='material-icons' style={{ marginTop: '1.25em' }}>
+                  <Link to='/update'>edit</Link>
+                </i>
               </div>
               <h5>{state.email}</h5>
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  width: '108%',
                 }}
               >
                 <h6>{myPosts.length} Posts</h6>
@@ -85,7 +73,7 @@ function Profile() {
           <div className='row'>
             {myPosts.map((one, idx) => (
               <ModalImage
-                className='col s4'
+                className='col s4 cell'
                 key={idx}
                 small={one.photo}
                 large={one.photo}

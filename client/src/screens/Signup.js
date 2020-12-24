@@ -1,17 +1,17 @@
-import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { useState } from 'react'
-import M from 'materialize-css'
-import { useEffect } from 'react'
+import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import M from 'materialize-css';
+import { useEffect } from 'react';
 
 function Signup() {
-  const history = useHistory()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const history = useHistory();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   // 只有这里是undefined，pic才会是undefined, 后端才会使用默认。''不行。但是有图标。null啥也没有。
-  const [urlFromCloud, setUrlFromCloud] = useState(undefined)
-  const [image, setImage] = useState('')
+  const [urlFromCloud, setUrlFromCloud] = useState(undefined);
+  const [image, setImage] = useState('');
 
   // 情况一 没上传图片。此时点击-postData-allToBackEnd-pic是undefined
   // 情况二 上传图片。此时点击-postData-uploadImageGetUrl-fetch-url改变-useEffect-allToBackEnd
@@ -19,28 +19,28 @@ function Signup() {
   // 这里uploadImageGetUrl需要时间，所以形成先后顺序，即url变化之后，再执行all
   useEffect(() => {
     if (urlFromCloud) {
-      allToBackEnd()
+      allToBackEnd();
     }
-  }, [urlFromCloud])
+  }, [urlFromCloud]);
 
   // 上传image到云 获得一个url
   const uploadImageGetUrl = () => {
-    const data = new FormData()
-    data.append('file', image)
-    data.append('upload_preset', 'insta-clone')
-    data.append('cloud_name', 'wangyiuu')
+    const data = new FormData();
+    data.append('file', image);
+    data.append('upload_preset', 'insta-clone');
+    data.append('cloud_name', 'wangyiuu');
     fetch('https://api.cloudinary.com/v1_1/wangyiuu/image/upload', {
       method: 'post',
       body: data,
     })
       .then((res) => res.json())
       .then((data) => {
-        setUrlFromCloud(data.url)
+        setUrlFromCloud(data.url);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   const allToBackEnd = () => {
     fetch('/signup', {
@@ -59,25 +59,25 @@ function Signup() {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          return M.toast({ html: data.error, classes: '#e53935 red darken-1' })
+          return M.toast({ html: data.error, classes: '#e53935 red darken-1' });
         } else {
-          M.toast({ html: data.good, classes: '#43a047 green darken-1' })
-          history.push('/login')
+          M.toast({ html: data.good, classes: '#43a047 green darken-1' });
+          history.push('/login');
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
   // 把注册信息传给后端
   const PostData = () => {
     if (image) {
-      uploadImageGetUrl()
+      uploadImageGetUrl();
     } else {
-      allToBackEnd()
+      allToBackEnd();
     }
-  }
+  };
 
   return (
     <div className='mycard'>
@@ -88,7 +88,7 @@ function Signup() {
           placeholder='Email'
           value={email}
           onChange={(e) => {
-            setEmail(e.target.value)
+            setEmail(e.target.value);
           }}
         />
         <input
@@ -96,7 +96,7 @@ function Signup() {
           placeholder='Name'
           value={name}
           onChange={(e) => {
-            setName(e.target.value)
+            setName(e.target.value);
           }}
         />
         <input
@@ -104,7 +104,7 @@ function Signup() {
           placeholder='Password'
           value={password}
           onChange={(e) => {
-            setPassword(e.target.value)
+            setPassword(e.target.value);
           }}
         />
 
@@ -114,7 +114,7 @@ function Signup() {
             <input
               type='file'
               onChange={(e) => {
-                setImage(e.target.files[0])
+                setImage(e.target.files[0]);
               }}
             />
           </div>
@@ -138,7 +138,7 @@ function Signup() {
         </h5>
       </div>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

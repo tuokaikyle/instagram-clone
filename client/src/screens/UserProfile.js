@@ -119,23 +119,20 @@ function UserProfile() {
   return (
     <>
       {data ? (
-        <div
-          style={{ maxWidth: '550px', margin: '0px auto' }}
-          className='all-1'
-        >
+        <div style={{ maxWidth: '700px' }} className='container'>
           {/* data是celebrity*/}
           {/* state是me登录用户 */}
 
           <div
-            className='up-2'
+            className='row'
             style={{
               display: 'flex',
-              justifyContent: 'space-around',
-              margin: '18px 0px',
+              padding: '15px 0px',
+              marginBottom: '15px',
               borderBottom: '1px solid grey',
             }}
           >
-            <div className='pic-3'>
+            <div style={{ margin: 'auto 5px' }}>
               <img
                 style={{
                   width: '160px',
@@ -146,14 +143,13 @@ function UserProfile() {
                 alt=''
               />
             </div>
-            <div className='name-3'>
+            <div className='col s5 offset-s1'>
               <h4>{data.user.name}</h4>
               <h5>{data.user.email}</h5>
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  width: '108%',
                 }}
               >
                 <h6>{data.posts.length} Posts</h6>
@@ -184,7 +180,7 @@ function UserProfile() {
             {data.posts.map((one, idx) => (
               // <img className='item col s1' key={idx} alt='' src={one.photo} />
               <ModalImage
-                className='col s4'
+                className='col s4 cell'
                 key={idx}
                 small={one.photo}
                 large={one.photo}

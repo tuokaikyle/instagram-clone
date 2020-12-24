@@ -63,7 +63,7 @@ const Navbar = () => {
             className='brand-logo left'
             style={{ paddingLeft: '10px' }}
           >
-            Instagram-Clone
+            Instagram
           </Link>
           <a
             href='#'
