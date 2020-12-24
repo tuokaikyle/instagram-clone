@@ -36,7 +36,7 @@ function Profile() {
           >
             <div
               style={{
-                maxWidth: '120px',
+                maxWidth: '150px',
                 height: 'auto',
                 marginBlock: 'auto',
                 marginRight: '20px',

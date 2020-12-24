@@ -132,7 +132,7 @@ function UserProfile() {
           >
             <div
               style={{
-                maxWidth: '120px',
+                maxWidth: '150px',
                 height: 'auto',
                 marginBlock: 'auto',
                 marginRight: '20px',
@@ -211,11 +211,10 @@ function UserProfile() {
               Follow
             </button>
           )}
-          <hr style={{ margin: '24px 0px' }} />
+          <hr style={{ margin: '20px 0px' }} />
 
           <div className='row'>
             {data.posts.map((one, idx) => (
-              // <img className='item col s1' key={idx} alt='' src={one.photo} />
               <ModalImage
                 className='col s4 cell'
                 key={idx}
